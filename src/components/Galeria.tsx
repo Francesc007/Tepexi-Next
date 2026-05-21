@@ -16,7 +16,7 @@ const PROYECTO_IMAGENES = [
   ["/kfc.jpg", "/kfc1.jpg", "/kfc2.jpg"],
   ["/lago.jpg", "/lago1.jpg", "/lago2.jpg"],
   ["/9.JPG", "/9.1.JPG", "/9.2.JPG"],
-  ["/PIH.jpg", "/PIH1.jpg", "/PIH2.jpg"],
+  ["/PIH.JPG", "/PIH1.JPG", "/PIH2.JPG"],
   ["/11.jpg", "/11.1.jpg", "/11.2.jpg"],
   ["/12.jpg", "/7.2.jpg", "/12.2.jpg"],
   ["/13.jpg", "/13.1.jpg", "/13.2.jpg"],
