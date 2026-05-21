@@ -80,6 +80,79 @@ function toMeters(value: number, u: Unidad): number {
   }
 }
 
+/** Etiquetas con notas en color acento para evitar confusión (espesores, peraltes, etc.). */
+function EtiquetaConNota({
+  titulo,
+  nota,
+  htmlFor,
+}: {
+  titulo: string;
+  nota: string;
+  /** Si se envía, el título será un `<label>` asociado al control (mejor lectores de pantalla). */
+  htmlFor?: string;
+}) {
+  return (
+    <div className="mb-1 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+      {htmlFor != null ? (
+        <label htmlFor={htmlFor} className="text-xs font-medium text-slate-700 cursor-default">
+          {titulo}
+        </label>
+      ) : (
+        <span className="text-xs font-medium text-slate-700">{titulo}</span>
+      )}
+      <span className="text-[11px] leading-snug text-orange-600">{nota}</span>
+    </div>
+  );
+}
+
+function notaEspesorUnidad(unidad: Unidad): string {
+  switch (unidad) {
+    case "m":
+      return "En metros (m), escribe el espesor en decimales (ej. 0.10 = 10 cm).";
+    case "cm":
+      return "En cm, escribe el espesor completo (ej. 10 para 10 cm).";
+    case "ft":
+      return "En pies, puedes usar decimales si el valor es menor a 1 ft (ej. 0.33 pies).";
+    case "in":
+      return "En pulgadas escribe la medida (ej. 4 para 4 plg ≈ 10 cm de espesor).";
+    default:
+      return "";
+  }
+}
+
+function notaAlturaProfundidadUnidad(unidad: Unidad, tipo: "profundidad" | "altura" | "peralte"): string {
+  const esPeralte = tipo === "peralte";
+  const esProfundidad = tipo === "profundidad";
+  switch (unidad) {
+    case "m":
+      if (esProfundidad) {
+        return "En metros (m), usa decimales para profundidades comunes en cm (ej. 0.40 = 40 cm).";
+      }
+      if (esPeralte) {
+        return "En metros (m), usa decimales para peraltes bajos (ej. 0.25 = 25 cm); invertir metro y cm altera fuerte el m³.";
+      }
+      return "En metros (m), usa decimales si tu medida viene en cm (ej. altura/pilar 2.40 m = 240 cm no como 240 m).";
+    case "cm":
+      if (esProfundidad) {
+        return "Profundidad en cm según selección arriba (ej. 40 para 40 cm).";
+      }
+      if (esPeralte) {
+        return "Peralte de la sección en cm en la misma unidad seleccionada (no mezclas con metro en el mismo campo).";
+      }
+      return "Altura en cm; que coincida con la unidad elegida junto al formulario.";
+    case "ft":
+      return esProfundidad
+        ? "Profundidad en pies con la misma convención que el resto de campos."
+        : "Dimensiones siempre según la unidad elegida.";
+    case "in":
+      return esProfundidad
+        ? "Profundidad en pulgadas, misma convención que largo/ancho."
+        : "Mediciones en pulgadas; revisa columna derecha si el total en m³ te parece alto o bajo.";
+    default:
+      return "";
+  }
+}
+
 type DimsLosa = { largo: string; ancho: string; espesor: string };
 type DimsColumna = {
   seccion: FormaColumnaSeccion;
@@ -444,6 +517,10 @@ export function CalculadoraVolumenConcreto({ onCotizarVolumenM3 }: CalculadoraVo
                     </option>
                   ))}
                 </select>
+                <p className="mt-2 text-[11px] leading-snug text-orange-600">
+                  Todos los campos de medición usan esta unidad de forma conjunta; el resultado se expresa siempre en
+                  m³.
+                </p>
               </div>
             </div>
 
@@ -471,13 +548,13 @@ export function CalculadoraVolumenConcreto({ onCotizarVolumenM3 }: CalculadoraVo
                     />
                   </div>
                   <div>
-                    <label className="text-xs text-slate-600 block mb-1">Espesor (E)</label>
+                    <EtiquetaConNota titulo="Espesor (E)" nota={notaEspesorUnidad(unidad)} />
                     <input
                       className={inputClass}
                       inputMode="decimal"
                       value={dims.losa.espesor}
                       onChange={(e) => setCampoLosa("espesor", e.target.value)}
-                      placeholder="0"
+                      placeholder={unidad === "m" ? "0.10" : "0"}
                     />
                   </div>
                 </>
@@ -506,13 +583,13 @@ export function CalculadoraVolumenConcreto({ onCotizarVolumenM3 }: CalculadoraVo
                     />
                   </div>
                   <div>
-                    <label className="text-xs text-slate-600 block mb-1">Espesor (firme) (E)</label>
+                    <EtiquetaConNota titulo="Espesor (firme) (E)" nota={notaEspesorUnidad(unidad)} />
                     <input
                       className={inputClass}
                       inputMode="decimal"
                       value={dims.piso.espesor}
                       onChange={(e) => setCampoPiso("espesor", e.target.value)}
-                      placeholder="0"
+                      placeholder={unidad === "m" ? "0.10" : "0"}
                     />
                   </div>
                 </>
@@ -587,7 +664,7 @@ export function CalculadoraVolumenConcreto({ onCotizarVolumenM3 }: CalculadoraVo
                     </>
                   )}
                   <div>
-                    <label className="text-xs text-slate-600 block mb-1">Altura (h)</label>
+                    <EtiquetaConNota titulo="Altura (h)" nota={notaAlturaProfundidadUnidad(unidad, "altura")} />
                     <input
                       className={inputClass}
                       inputMode="decimal"
@@ -612,17 +689,17 @@ export function CalculadoraVolumenConcreto({ onCotizarVolumenM3 }: CalculadoraVo
                     />
                   </div>
                   <div>
-                    <label className="text-xs text-slate-600 block mb-1">Espesor (t)</label>
+                    <EtiquetaConNota titulo="Espesor (t)" nota={notaEspesorUnidad(unidad)} />
                     <input
                       className={inputClass}
                       inputMode="decimal"
                       value={dims.pared.espesor}
                       onChange={(e) => setCampoPared("espesor", e.target.value)}
-                      placeholder="0"
+                      placeholder={unidad === "m" ? "0.15" : "0"}
                     />
                   </div>
                   <div>
-                    <label className="text-xs text-slate-600 block mb-1">Altura (h)</label>
+                    <EtiquetaConNota titulo="Altura (h)" nota={notaAlturaProfundidadUnidad(unidad, "altura")} />
                     <input
                       className={inputClass}
                       inputMode="decimal"
@@ -657,13 +734,13 @@ export function CalculadoraVolumenConcreto({ onCotizarVolumenM3 }: CalculadoraVo
                     />
                   </div>
                   <div>
-                    <label className="text-xs text-slate-600 block mb-1">Profundidad</label>
+                    <EtiquetaConNota titulo="Profundidad" nota={notaAlturaProfundidadUnidad(unidad, "profundidad")} />
                     <input
                       className={inputClass}
                       inputMode="decimal"
                       value={dims.cimientos.profundidad}
                       onChange={(e) => setCampoCimientos("profundidad", e.target.value)}
-                      placeholder="0"
+                      placeholder={unidad === "m" ? "0.40" : "0"}
                     />
                   </div>
                 </>
@@ -692,22 +769,24 @@ export function CalculadoraVolumenConcreto({ onCotizarVolumenM3 }: CalculadoraVo
                     />
                   </div>
                   <div>
-                    <label className="text-xs text-slate-600 block mb-1">Peralte (h)</label>
+                    <EtiquetaConNota titulo="Peralte (h)" nota={notaAlturaProfundidadUnidad(unidad, "peralte")} />
                     <input
                       className={inputClass}
                       inputMode="decimal"
                       value={dims.trabes.altura}
                       onChange={(e) => setCampoTrabes("altura", e.target.value)}
-                      placeholder="0"
+                      placeholder={unidad === "m" ? "0.35" : "0"}
                     />
                   </div>
                 </>
               )}
 
               <div className="pt-1">
-                <label htmlFor="reserva-pct" className="text-xs text-slate-600 block mb-1">
-                  Volumen de reserva (desperdicio)
-                </label>
+                <EtiquetaConNota
+                  htmlFor="reserva-pct"
+                  titulo="Volumen de reserva (desperdicio)"
+                  nota="Se suma al volumen neto como porcentaje; en obra común usar 5 %–10 %."
+                />
                 <div className="flex gap-2 items-center">
                   <input
                     id="reserva-pct"

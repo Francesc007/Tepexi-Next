@@ -7,18 +7,18 @@ import { blurDataUrlForPublicImage } from "@/lib/image-blur-placeholders";
 
 /** Tres vistas por proyecto; rutas bajo /public (p. ej. 1→1,1.2,1.3 / 2→2,2.1,2.3 / 3→3,3.1,3.2 …). */
 const PROYECTO_IMAGENES = [
-  ["/1.jpg", "/1.2.jpg", "/1.3.jpg"],
+  ["/1.png", "/1.2.jpg", "/1.3.jpg"],
   ["/2.jpg", "/2.1.jpg", "/2.3.jpg"],
   ["/3.jpg", "/3.1.jpg", "/3.2.jpg"],
-  ["/4.jpg", "/4.1.jpg", "/4.2.jpg"],
+  ["/4.jpg", "/4.1.png", "/4.2.jpg"],
   ["/5.jpg", "/5.1.jpg", "/5.2.jpg"],
   ["/6.jpg", "/6.1.jpg", "/6.2.jpg"],
-  ["/7.jpg", "/7.1.jpg", "/7.2.jpg"],
-  ["/8.jpg", "/8.1.jpg", "/8.2.jpg"],
+  ["/kfc.jpg", "/kfc1.jpg", "/kfc2.jpg"],
+  ["/lago.jpg", "/lago1.jpg", "/lago2.jpg"],
   ["/9.JPG", "/9.1.JPG", "/9.2.JPG"],
-  ["/10.jpg", "/10.1.jpg", "/10.2.jpg"],
+  ["/PIH.jpg", "/PIH1.jpg", "/PIH2.jpg"],
   ["/11.jpg", "/11.1.jpg", "/11.2.jpg"],
-  ["/12.jpg", "/12.1.jpg", "/12.2.jpg"],
+  ["/12.jpg", "/7.2.jpg", "/12.2.jpg"],
   ["/13.jpg", "/13.1.jpg", "/13.2.jpg"],
   ["/14.jpg", "/14.1.jpg", "/14.2.jpg"],
   ["/15.jpg", "/15.1.jpg", "/15.2.jpg"],
@@ -32,7 +32,7 @@ const items = [
     imagenes: PROYECTO_IMAGENES[0],
   },
   {
-    titulo: "Muro de Contención en Autopista Méx-Qro.",
+    titulo: "Muro de Contención en Autopista 57, Méx-Qro.",
     imagenes: PROYECTO_IMAGENES[1],
   },
   {
@@ -52,11 +52,11 @@ const items = [
     imagenes: PROYECTO_IMAGENES[5],
   },
   {
-    titulo: "Naves Industriales Marvic Ingeniería, Tepeji del Río, Hgo.",
+    titulo: "Obra en Plaza del Río, Tepeji del Río, Hgo.",
     imagenes: PROYECTO_IMAGENES[6],
   },
   {
-    titulo: "Zapatas y nivelación, Tecozautla, Hgo.",
+    titulo: "Obra de Lago Artificial, Hgo.",
     imagenes: PROYECTO_IMAGENES[7],
   },
   {
@@ -64,7 +64,7 @@ const items = [
     imagenes: PROYECTO_IMAGENES[8],
   },
   {
-    titulo: "Vialidad Melchor Ocampo, Puente de Taxhido, Tepeji del Río, Hgo.",
+    titulo: "Parque Industrial Huehuetoca, Huehuetoca, Edo. Méx.",
     imagenes: PROYECTO_IMAGENES[9],
   },
   {
@@ -72,7 +72,7 @@ const items = [
     imagenes: PROYECTO_IMAGENES[10],
   },
   {
-    titulo: "Parque industrial, Tepeji del Río, Hgo.",
+    titulo: "Naves Industriales Marvic Ingeniería, Tepeji del Río, Hgo.",
     imagenes: PROYECTO_IMAGENES[11],
   },
   {
@@ -80,11 +80,11 @@ const items = [
     imagenes: PROYECTO_IMAGENES[12],
   },
   {
-    titulo: "Bodegas Industriales, Tepeji del Río, Hgo..",
+    titulo: "Bodegas Industriales, Tepeji del Río, Hgo.",
     imagenes: PROYECTO_IMAGENES[13],
   },
   {
-    titulo: "Vialidades en Santa María Magdalena, Tepeji del Río,Hgo.",
+    titulo: "Vialidades en Santa María Magdalena, Tepeji del Río, Hgo.",
     imagenes: PROYECTO_IMAGENES[14],
   },
 ] as const;
