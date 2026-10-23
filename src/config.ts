@@ -14,6 +14,8 @@ export const CONFIG = {
   whatsappNumber: "5215542600590",
   /** Segundo contacto móvil por WhatsApp (773 158 5835). Formato API 521 + 10 dígitos. */
   whatsappSecondaryNumber: "5217731585835",
+  /** Tercer contacto móvil por WhatsApp (773 385 8457). Formato API 521 + 10 dígitos. */
+  whatsappTertiaryNumber: "5217733858457",
   /** Mismo número en formato legible */
   whatsappDisplay: "+52 55 4260 0590",
   /** Teléfono fijo en formato E.164 para `tel:` (55 1555 2097). */

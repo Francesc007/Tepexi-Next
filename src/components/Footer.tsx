@@ -137,6 +137,17 @@ export function Footer() {
                 </li>
                 <li>
                   <a
+                    href={whatsappHref(CONFIG.whatsappTertiaryNumber)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 text-white transition-colors hover:text-[#a5d8ff]"
+                  >
+                    <WhatsAppIconSmall className="h-4 w-4 shrink-0 text-[#25D366]" />
+                    <span>773 385 8457</span>
+                  </a>
+                </li>
+                <li>
+                  <a
                     href={`tel:${CONFIG.landlinePhoneE164}`}
                     className="inline-flex items-center justify-center gap-2 text-white transition-colors hover:text-[#a5d8ff]"
                   >
